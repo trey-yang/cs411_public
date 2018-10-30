@@ -1,0 +1,31 @@
+* {
+	margin: 2%;
+}
+
+body {
+	font-family: verdana;
+	color: #FFF;
+	font-size: 180%;
+	background: #BBBBBB;
+}
+
+a:link {color:#9BEA00;}
+a:visited {color:#8BD200;}
+a:active {color:#99FFDD;}
+
+h3 {
+	font-family: 'Ubuntu', sans-serif;
+	font-size: 180%;
+}
+
+div {
+	background: #104EB2;
+	box-shadow: 0px 0px 5px rgba(0,0,0,.05);
+	border-radius: 0 20px 20px 20px;
+	width: 96%;
+
+}
+
+span.signature {
+	font-family: 'Lato', sans-serif;
+}
