@@ -1,0 +1,14 @@
+CS411 Project Assignment #3 Prototyping API Calls Documentation
+10/25/2018
+
+Team: Discussion A3 Team 2
+Siqi Wu
+Harveen Bawa
+Qingyun Yang
+Zhilin Guo
+
+For our project as a whole, we are using MEAN stack, which is an acronym for MongoDB, ExpressJS, AngularJS, and Node.js. Currently, our backend uses Node.js, since it is highly efficient and scalable, that was created to develop web applications which supports real-time updates and push capability. We find that it suits our proposed route-planning website very well.
+
+Just for this prototype, our frontend is using  HTML, because it is an easy solution to demonstrate that we can make an API call with client input. However, for the final product, we will be using AngularJS that adheres to MEAN stack format.
+
+We have considered the very well-known LAMP stack (Linux, Apache, MySQL, PHP). However, we decided not to use it, because MEAN stack writes only in JavaScript throughout its stack, meaning that the the programming language and the data format are unified, making it very convenient for programming. Additionally, we want to build a route-planning web application that requires constant updates to the user’s current location, which MEAN stack has an advantage in.
