@@ -24,14 +24,14 @@ app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 
 // Static Folder
-app.use(express.static(path.join(__dirname, 'client')))  // angular2 stuff
+app.use(express.static(path.join(__dirname, 'client')));  // angular2 stuff
+app.use(express.static(path.join(__dirname, 'public')));
 
 // bodyParser MiddleWare
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 // routes
-app.use(express.static('public'));
 app.use('/', index);
 app.post('/search', search);
 app.use('/search', search);
