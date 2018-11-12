@@ -1,0 +1,25 @@
+Team: Discussion A3 Team 2
+Siqi Wu
+Harveen Bawa
+Qingyun Yang
+Zhilin Guo
+
+CS411 Proposal
+
+1.	What the idea is
+2.	How we are going to implement it
+3.	Why is it important/what is the issue
+4.	how we are trying to solve this
+
+
+Github:  https://github.com/trey-yang/cs411_public
+
+Proposal 1: BU Bus, 57 Bus, T (could also put in MIT shuttle)
+While there are MBTA trackers available everywhere, and BU does provide an app (IOS only) and website for its shuttle services, we have yet to find a tracking solution that combines all available methods of transportation for user to figure out the best way to get somewhere. User would have to check each app and site separately and remember the results in their head to make a decision. This process is naturally very cumbersome and time-consuming, especially when their need to go to the other side of campus within the 15 minutes break between classes.
+We’d like to give the user an overview of the cost and time for each of the options: BU Shuttle, MBTA green line, MBTA 57 bus, MIT shuttle, Uber and Lyft to travel between two points so they can decide on the fastest or cheapest way to get where they need to be.
+We can potentially implement the feature to notify user to bring bad weather gear and plan for extra travel time whenever it is raining or snowing around BU.
+To streamline the process, our application will let user login through twitter or facebook to store preferences: home, work and other frequently used locations and even choose to receive a private message notification from our twitter bot account to let them know when the vehicle is approaching their location. User might even be able to set up recurring notifications according to their weekly class and work schedule so they will be notified via Twitter PM when they just get out of a class and heading to the next one.
+
+Proposal 2: Stock market analytics
+
+Starting from 2015, the economic recovery has fallen short of expectations; huge economies like China and Russia slowed their growth; and North American countries such as America and Canada began to extract crude oil on their own to fight against the high world oil price. In response, the price of crude oil declined sharply, as well as the stock market shares price of some companies which involve in crude oil exploration, exploitation, and transportation, costing investors large amounts of money. We propose to build a webpage-based online solution that monitors both the WTI oil price and the stock market price of some hand-selected companies that are related to crude oil, to actively alert our users of sudden increases and decreases in the prices. Using crude oil price, we aim to alert our users head of time of possible change in these companies’ share prices, so our users can avoid monetary loss or gain additional profit.
