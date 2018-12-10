@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request');
-var secrets = require('../config/secrets');
+var google = require('../config/google');
 
 const { body,validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
@@ -33,7 +33,7 @@ router.post('/testGoogle', [
   var options = { method: 'GET',
     url: 'https://maps.googleapis.com/maps/api/directions/json',
     qs:
-      { key: secrets.Google,
+      { key: google.googleAPIkey,
           origin: origin,
           destination: destination,
           mode: 'transit' },
