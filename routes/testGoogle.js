@@ -1,3 +1,7 @@
+//
+// file left for reference. Need to reinitialize route before use
+//
+
 var express = require('express');
 var router = express.Router();
 var request = require('request');

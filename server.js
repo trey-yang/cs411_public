@@ -17,8 +17,6 @@ var secport = 443;
 
 // routes
 var index = require('./routes/index');
-var search = require('./routes/search');
-var testGoogle = require('./routes/testGoogle');
 var testmap = require('./routes/testmap');
 var api = require('./routes/api');
 
@@ -66,11 +64,7 @@ app.use(passport.session({cookie: { secure: true, httpOnly: true, maxAge: 360000
 
 // routes
 app.use('/', index);
-app.use('/testmap', testmap)
-app.post('/search', search);
-app.use('/search', search);
-app.post('/testGoogle', testGoogle);
-app.use('/testGoogle', testGoogle);
+app.use('/testmap', testmap);
 app.use('/api', api);
 
 // twitter OAuth mess
