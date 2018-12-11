@@ -1,5 +1,7 @@
 # cs411_public
 
+Please modify file templates in /config before running the app
+
 Run this on port 80/443 with
 `sudo node server.js`
 
