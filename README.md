@@ -8,8 +8,11 @@ or modify port settings to run without previliges
 Components highlight:
 - Node.js
 - Express
+- JQuery
+- BootStrap
+- EJS
+- MongoDB
 - GoogleMapsAPI
 - MBTA V3 API
-- JQuery
-- EJS
+- Custom BU Shuttle API
 - Twitter OAuth 1.1
