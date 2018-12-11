@@ -21,10 +21,10 @@ router.get('/yay', require('connect-ensure-login').ensureLoggedIn('/login/twitte
         if (err) throw err;
         client.close();
         var fav;
-        if (resp != null) {
-          fav = resp.favorite;
+        if (resp.favorite === undefined) {
+          fav = [];
         } else {
-          fav = "";
+          fav = resp.favorite;
         }
         res.render('indexMap.ejs', {
           user: req.user,
