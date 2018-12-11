@@ -8,6 +8,8 @@ var passport = require('passport');
 var twitterStrategy = require('passport-twitter').Strategy;
 var twitterConfig = require('./config/twitter');
 var secrets = require('./config/secrets');
+var mongo = require('mongodb').MongoClient;
+var url = require('./config/database').url;
 
 // https keys
 var key = fs.readFileSync(httpskeys.key);
@@ -17,20 +19,20 @@ var secport = 443;
 
 // routes
 var index = require('./routes/index');
-var testmap = require('./routes/testmap');
 var api = require('./routes/api');
+var googleDirectionSearch = require('./routes/googleDirectionSearch');
 
 // passport twitter
 passport.use(new twitterStrategy({
     consumerKey: twitterConfig.twitterKey,
     consumerSecret: twitterConfig.twitterSecret,
     callbackURL: twitterConfig.twitterCallback,
-		userProfileURL: "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true",
+    userProfileURL: "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true",
     proxy: false
   },
   function(token, tokenSecret, profile, cb) {
     return cb(null, profile);
-}));
+  }));
 
 passport.serializeUser(function(user, cb) {
   cb(null, user);
@@ -53,48 +55,90 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // bodyParser MiddleWare
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 
 // express-session
-app.use(require('express-session')({ secret: secrets.sessionSecret, resave: true, saveUninitialized: true }));
+app.use(require('express-session')({
+  secret: secrets.sessionSecret,
+  resave: true,
+  saveUninitialized: true
+}));
 
 // initialize Passport and restore state from session if exists
 app.use(passport.initialize());
-app.use(passport.session({cookie: { secure: true, httpOnly: true, maxAge: 3600000 }}));
+app.use(passport.session({
+  cookie: {
+    secure: true,
+    httpOnly: true,
+    maxAge: 3600000
+  }
+}));
 
 // routes
 app.use('/', index);
-app.use('/testmap', testmap);
 app.use('/api', api);
+app.post('/googleDirectionSearch', googleDirectionSearch);
 
 // twitter OAuth mess
 app.get('/login/twitter', passport.authenticate('twitter'));
 app.get('/login/twitter/callback',
-  passport.authenticate('twitter', { failureRedirect: '/' }),
+  passport.authenticate('twitter', {
+    failureRedirect: '/'
+  }),
   function(req, res) {
+    // database record
+    mongo.connect(url, {
+      useNewUrlParser: true
+    }, function(err, client) {
+      if (err) throw err;
+      var db = client.db("beantracker");
+      var userEmail;
+      if (req.user.hasOwnProperty('emails')) {
+        userEmail = req.user.emails[0].value;
+      } else {
+        userEmail = null;
+      };
+      db.collection("twitter").updateOne({
+        id: req.user.id,
+        username: req.user.username,
+        displayName: req.user.displayName,
+        email: userEmail
+      }, {
+        $set: {
+          lastLogin: new Date().toISOString()
+        }
+      }, {
+        upsert: true
+      }, function(err, res) {
+        if (err) throw err;
+        client.close();
+      });
+    });
+    // end of database block
     res.redirect('/yay');
-});
-app.get('/profile',
-  require('connect-ensure-login').ensureLoggedIn('/login/twitter'),
-  function(req, res){
-    res.render('profile', { user: req.user });
-});
+  });
+
 app.get('/logout', function(req, res) {
-    req.logout();
-    res.redirect('/');
+  req.logout();
+  res.redirect('/');
 });
 
 // https server
-const httpsServer = https.createServer({key:key, cert:cert}, app).listen(secport, function(){
-	console.log('Secure magic happening on port ' + secport);
+const httpsServer = https.createServer({
+  key: key,
+  cert: cert
+}, app).listen(secport, function() {
+  console.log('Secure magic happening on port ' + secport);
 });
 
 // http redirect server
 const http = require('http');
 const httpApp = express();
 httpApp.get('*', function(req, res) {
-	res.redirect('https://' + req.headers.host + req.url);
+  res.redirect('https://' + req.headers.host + req.url);
 })
-const httpServer = http.createServer(httpApp).listen(port, function(){
-	console.log('Magic happening on port ' + port);
+const httpServer = http.createServer(httpApp).listen(port, function() {
+  console.log('Magic happening on port ' + port);
 });
